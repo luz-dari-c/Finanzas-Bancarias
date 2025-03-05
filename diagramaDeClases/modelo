@@ -1,20 +1,29 @@
 
----
-config:
-  theme: neo-dark
----
 classDiagram
 direction TB
     class Banco {
 	    String identificador;
-	    List <Sucursal> sucursales;
+	    List  <Sucursal> sucursales;
+        List <Clientes> clientes;
+     
     }
+     class Sucursal {
+	    int numero;
+	    String direccion;
+	    String codigoPostal;
+	    String ciudad;
+	    List <Empleado> empleados;
+	    Empleado director;
+        String identificador; 
+        List <Cuenta> cuentas; 
+
+    }
+
     class Cliente {
 	    String nombre;
 	    String direccion;
 	    String codigoIdentificacion;
-        List <Cuenta> cuentas;
-
+	    List <Cuenta> cuentas;
     }
     class Persona {
 	    String fechaDeNacimiento;
@@ -28,45 +37,41 @@ direction TB
     class Cuenta {
 	    int saldoActual;
 	    int saldoMedio;
-        String numeroDeCuenta;
-        String identificadorBanco;
-        String identificadorSucursal;
-        Cliente cliente;  
+	    String numeroDeCuenta;
+	    String identificadorBanco;
+	    String identificadorSucursal;
+	    Cliente cliente;
+        String CCC;
+        Sucursal sucursal;
+        Date fechaDeApertura;
+        int antiguedad;
     }
     class CuentaCorriente {
+ 
     }
     class CuentaAhorro {
 	    String tipoDeAmortizacion;
     }
-    class Sucursal {
-	    int numero;
-	    String direccion;
-	    String codigoPostal;
-	    String ciudad;
-	    List <Empleado>empleados;
-        Empleado director;
-
-    }
     class Empleado {
+        String fechaDeNacimiento;
+        String sexo;
 	    String DNI;
 	    String nombre;
-	    String fechaDeNacimiento;
-	    String sexo;
 	    Sucursal sucursal;
-
+        boolean esDirector;
+        Cliente cliente;
     }
+   
 
-Cliente <|-- Persona : 1
-Cliente <|-- Organizacion : 1
-Cuenta <|-- CuentaCorriente
-Cuenta <|--CuentaAhorro
-
-Banco "1" -- "1..*" Sucursal : Tiene
-Cliente "1" -- "1..*" Cuenta : Posee
-Sucursal "1" -- "0..*" Empleado : Emplea
-Sucursal "1" -- "0..1" Empleado : DirigidaPor
-
-
-
-
+    Cliente <|-- Persona : 1
+    Cliente <|-- Organizacion : 1
+    Cuenta <|-- CuentaCorriente
+    Cuenta <|-- CuentaAhorro
+    Banco "1" -- "1..*" Sucursal : Tiene
+    Cliente "1" -- "1..*" Cuenta : Posee
+    Sucursal "1" -- "0..*" Empleado : Emplea
+    Sucursal "1" -- "0..1" Empleado : DirigidaPor
+    Banco "1" -- "1..*" Cliente: Tener
+    Sucursal "1" -- "0..*" Cuenta : Tiene
+    Empleado "0..1" -- "0..1" Cliente : Es
 
