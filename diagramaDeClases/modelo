@@ -1,0 +1,72 @@
+
+---
+config:
+  theme: neo-dark
+---
+classDiagram
+direction TB
+    class Banco {
+	    String identificador;
+	    List <Sucursal> sucursales;
+    }
+    class Cliente {
+	    String nombre;
+	    String direccion;
+	    String codigoIdentificacion;
+        List <Cuenta> cuentas;
+
+    }
+    class Persona {
+	    String fechaDeNacimiento;
+	    String sexo;
+    }
+    class Organizacion {
+	    String tipo;
+	    String representante;
+	    int cantidadEmpleados;
+    }
+    class Cuenta {
+	    int saldoActual;
+	    int saldoMedio;
+        String numeroDeCuenta;
+        String identificadorBanco;
+        String identificadorSucursal;
+        Cliente cliente;  
+    }
+    class CuentaCorriente {
+    }
+    class CuentaAhorro {
+	    String tipoDeAmortizacion;
+    }
+    class Sucursal {
+	    int numero;
+	    String direccion;
+	    String codigoPostal;
+	    String ciudad;
+	    List <Empleado>empleados;
+        Empleado director;
+
+    }
+    class Empleado {
+	    String DNI;
+	    String nombre;
+	    String fechaDeNacimiento;
+	    String sexo;
+	    Sucursal sucursal;
+
+    }
+
+Cliente <|-- Persona : 1
+Cliente <|-- Organizacion : 1
+Cuenta <|-- CuentaCorriente
+Cuenta <|--CuentaAhorro
+
+Banco "1" -- "1..*" Sucursal : Tiene
+Cliente "1" -- "1..*" Cuenta : Posee
+Sucursal "1" -- "0..*" Empleado : Emplea
+Sucursal "1" -- "0..1" Empleado : DirigidaPor
+
+
+
+
+
